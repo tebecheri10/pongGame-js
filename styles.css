@@ -1,0 +1,20 @@
+*{
+    margin: unset;
+    box-sizing: border-box;
+}
+
+.canvasContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(./assets/img/pong-background-2.jpg);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+}
+
+#gameCanvas {
+    max-height: 600px;
+}

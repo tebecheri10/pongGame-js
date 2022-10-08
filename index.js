@@ -8,7 +8,8 @@ let racketHeight = 120;
 let racketWidth = 20;
 let racket1Y = 200;
 let racket2Y = 200;
-
+let score1 = 0;
+let score2 = 0;
 
 const getCanvas = () => {
   let canvasContext = canvasHTML.getContext("2d");
@@ -22,12 +23,15 @@ const createGameLayout = () => {
   createBall();
   createLeftRacket();
   createRightRacket();
-  computerMovement()
+  computerMovement();
+  drawTableLines();
+  drawScore(score1,(canvasHTML.width / 3) , 100)
+  drawScore(score2,(canvasHTML.width / 1.5)  , 100);
 };
 
 const createBall = () => {
   const ballElement = getCanvas();
-  ballElement.fillStyle = "#fff";
+  ballElement.fillStyle = "#03fc6b";
   ballElement.beginPath();
   ballElement.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
   ballElement.fill();
@@ -39,19 +43,27 @@ const ballMovement = () => {
   ballX = ballX + speedX;
 
   //Manage de right side actions if the ball hit the racket or goes outside de canvas
-  if (ballX > canvasHTML.width - racketWidth && ballY > racket2Y && ballY < racket2Y + racketHeight) {
+  if (
+    ballX > canvasHTML.width - racketWidth &&
+    ballY > racket2Y &&
+    ballY < racket2Y + racketHeight
+  ) {
     speedX = -speedX;
   }
   if (ballX === canvasHTML.width) {
-    onPoint();
+    onPoint(2);
     speedX = -speedX;
   }
   //Manage de left side actions if the ball hit the racket or goes outside de canvas
-  if (ballX === racketWidth && ballY > racket1Y && ballY < racket1Y + racketHeight) {
+  if (
+    ballX === racketWidth &&
+    ballY > racket1Y &&
+    ballY < racket1Y + racketHeight
+  ) {
     speedX = -speedX;
   }
   if (ballX === 0) {
-    onPoint();
+    onPoint(1);
     speedX = -speedX;
   }
   // Ball Vertical movement
@@ -71,10 +83,27 @@ const createLeftRacket = () => {
 };
 
 const createRightRacket = () => {
-    const rightRacket = getCanvas();
-    rightRacket.fillStyle = "white";
-    rightRacket.fillRect( canvasHTML.width - racketWidth , racket2Y, racketWidth, racketHeight);
-  };
+  const rightRacket = getCanvas();
+  rightRacket.fillStyle = "white";
+  rightRacket.fillRect(
+    canvasHTML.width - racketWidth,
+    racket2Y,
+    racketWidth,
+    racketHeight
+  );
+};
+
+const drawTableLines = () => {
+  const tableLines = getCanvas();
+  tableLines.fillStyle = "white";
+  tableLines.fillRect(canvasHTML.width / 2, 0, racketWidth/2, canvasHTML.height);
+};
+
+const drawScore = (wichScore,x,y)=>{
+  const score = getCanvas();
+  score.font = '48px serif';
+  score.fillText(wichScore,x , y );
+}
 
 const mousePosition = (e) => {
   let rect = canvasHTML.getBoundingClientRect();
@@ -89,28 +118,33 @@ const mousePosition = (e) => {
 };
 
 const computerMovement = () => {
-        let racket2Ymiddle = racket2Y + (racketHeight/ 2)
-        if(racket2Ymiddle < ballY){
-            racket2Y += Math.random()*17
-        }else{
-            racket2Y -= Math.random()*17
-        }
-  };
+  let racket2Ymiddle = racket2Y + racketHeight / 2;
+  if (racket2Ymiddle < ballY) {
+    racket2Y += Math.random() * 17;
+  } else {
+    racket2Y -= Math.random() * 17;
+  }
+};
 
-const onPoint = () => {
+const onPoint = (score) => {
+  if(score === 2){
+    score2++
+  }else{
+    score1++
+  }
   ballX = canvasHTML.width / 2;
   ballY = canvasHTML.height / 2;
 };
 
 window.addEventListener("load", () => {
-    let fps = 30;
-    
-    canvasHTML.addEventListener("mousemove", (e) => {
-      let mousePos = mousePosition(e);
-      racket1Y = mousePos.y - racketHeight / 2;
-    });
+  let fps = 50;
 
-    if (true) {
+  canvasHTML.addEventListener("mousemove", (e) => {
+    let mousePos = mousePosition(e);
+    racket1Y = mousePos.y - racketHeight / 2;
+  });
+
+  if (true) {
     setInterval(() => {
       createGameLayout();
     }, 1000 / fps);
