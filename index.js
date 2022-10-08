@@ -25,8 +25,8 @@ const createGameLayout = () => {
   createRightRacket();
   computerMovement();
   drawTableLines();
-  drawScore(score1,(canvasHTML.width / 3) , 100)
-  drawScore(score2,(canvasHTML.width / 1.5)  , 100);
+  drawScore(score1,(canvasHTML.width / 1.5) , 100)
+  drawScore(score2, (canvasHTML.width / 3) , 100);
 };
 
 const createBall = () => {
@@ -51,7 +51,7 @@ const ballMovement = () => {
     speedX = -speedX;
   }
   if (ballX === canvasHTML.width) {
-    onPoint(2);
+    onPoint();
     speedX = -speedX;
   }
   //Manage de left side actions if the ball hit the racket or goes outside de canvas
@@ -63,7 +63,7 @@ const ballMovement = () => {
     speedX = -speedX;
   }
   if (ballX === 0) {
-    onPoint(1);
+    onPoint(2);
     speedX = -speedX;
   }
   // Ball Vertical movement
@@ -128,9 +128,9 @@ const computerMovement = () => {
 
 const onPoint = (score) => {
   if(score === 2){
-    score2++
-  }else{
     score1++
+  }else{
+    score2++
   }
   ballX = canvasHTML.width / 2;
   ballY = canvasHTML.height / 2;
