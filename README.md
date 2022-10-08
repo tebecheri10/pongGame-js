@@ -1,5 +1,5 @@
 
-# Juego de ping-pong :newspaper:
+# Juego de ping-pong 🏓
 
 Juego básico de ping-pong realizado con javascript<br/>
 Herramientas:
