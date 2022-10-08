@@ -49,6 +49,8 @@ const ballMovement = () => {
     ballY < racket2Y + racketHeight
   ) {
     speedX = -speedX;
+    let deltaY = ballY - ( racket2Y + racketHeight / 2 );
+    speedY = deltaY * 0.35
   }
   if (ballX === canvasHTML.width) {
     onPoint();
@@ -61,6 +63,8 @@ const ballMovement = () => {
     ballY < racket1Y + racketHeight
   ) {
     speedX = -speedX;
+    let deltaY = ballY - ( racket1Y + racketHeight / 2 );
+    speedY = deltaY * 0.35
   }
   if (ballX === 0) {
     onPoint(2);
@@ -68,10 +72,10 @@ const ballMovement = () => {
   }
   // Ball Vertical movement
   ballY = ballY + speedY;
-  if (ballY > canvasHTML.height - 10) {
+  if (ballY >= canvasHTML.height - 10) {
     speedY = -speedY;
   }
-  if (ballY === 0) {
+  if (ballY < 0) {
     speedY = -speedY;
   }
 };
@@ -137,7 +141,7 @@ const onPoint = (score) => {
 };
 
 window.addEventListener("load", () => {
-  let fps = 50;
+  let fps = 60;
 
   canvasHTML.addEventListener("mousemove", (e) => {
     let mousePos = mousePosition(e);
@@ -146,7 +150,7 @@ window.addEventListener("load", () => {
 
   if (true) {
     setInterval(() => {
-      createGameLayout();
+        createGameLayout();  
     }, 1000 / fps);
   }
 });
