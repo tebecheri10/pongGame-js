@@ -1,5 +1,5 @@
 
-# Juego de ping-pong 🏓
+# Juego de ping-pong 🏓 ( Desktop )
 
 Juego básico de ping-pong realizado con javascript<br/>
 Herramientas:
